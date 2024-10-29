@@ -1,5 +1,6 @@
 import {IState} from "../types.dt";
 import Anthropic from '@anthropic-ai/sdk';
+import { logToMarkdown } from "./agent";
 const anthropic = new Anthropic({
     apiKey: process.env.ANTHROPIC_API_KEY,
 });
@@ -8,6 +9,9 @@ const anthropic = new Anthropic({
  * BASIC Anthropic Completion function
  */
 export const completion = async <CompletionType = string>(state: IState): Promise<CompletionType> => {
+
+    const thePrompt = "System Prompt:\n" + state.systemPrompt + "\n\nMessages:\n" + state.messages.map(m => `${m.role}: ${m.content}`).join('\n');
+    logToMarkdown('prompt', 'Sending Prompt:', thePrompt);
     try  {
         const response = await anthropic.messages.create({
             max_tokens: 4096,

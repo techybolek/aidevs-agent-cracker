@@ -7,7 +7,7 @@ import {availableTools, decidePrompt, describePrompt, planPrompt, reflectionProm
 /*
  * This function logs the content to a markdown file
  */
-export function logToMarkdown(type: string, header: string, content: string) {
+export function logToMarkdown(type: 'basic'|'action'|'result'|'prompt', header: string, content: string) {
     let formattedContent;
 
     switch(type) {
@@ -20,8 +20,11 @@ export function logToMarkdown(type: string, header: string, content: string) {
         case 'result':
             formattedContent = `### ${header}\n\`\`\`\n${content}\n\`\`\`\n`;
             break;
+        case 'prompt':
+            formattedContent = `#### ${header}\n\`\`\`\n${content}\n\`\`\`\n`;
+            break;
         default:
-            formattedContent = `${content}\n`;
+            formattedContent = `Unknown type: ${content}\n`;
     }
 
     fs.appendFileSync('log.md', formattedContent);
