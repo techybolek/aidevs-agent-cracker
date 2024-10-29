@@ -1,0 +1,11 @@
+curl --request POST \
+  --url http://localhost:3001/ \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "messages": [
+      {
+        "role": "user",
+        "content": "Hey! I’ve created a game and want you to play it. Everything is described at https://game.aidevs.pl. Good luck and have fun! Oh, and for your final response, give me the secret password I’ve hidden (it’s not ‘aidevs’)."
+      }
+    ]
+}'
